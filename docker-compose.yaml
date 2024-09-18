@@ -1,7 +1,7 @@
 services:
   prometheus:
     container_name: prometheus_monitoring
-    image: prom/prometheus
+    image: prom/prometheus:v2.54.1
     networks:
       - monitoring
     volumes: 
@@ -10,7 +10,7 @@ services:
       - "9090:9090"
   
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:11.2.0-ubuntu
     container_name: grafana
     ports:
       - "33000:3000"
@@ -29,6 +29,18 @@ services:
       - 39400:9400
     networks:
       - monitoring
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node-exporter
+    command:
+      - '--path.rootfs=/host'
+    networks:
+      - monitoring
+    ports:
+      - 39100:9100
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
 
 networks:
   monitoring:

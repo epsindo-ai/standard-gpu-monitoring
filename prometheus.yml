@@ -1,6 +1,6 @@
 global:
   scrape_interval: 15s
 scrape_configs:
-  - job_name: 'dcgm'
+  - job_name: 'host-gpu-node'
     static_configs:
-      - targets: ['dcgm-exporter:9400']
+      - targets: ['dcgm-exporter:9400', 'node-exporter:9100']
