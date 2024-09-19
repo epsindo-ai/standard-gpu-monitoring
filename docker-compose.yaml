@@ -29,6 +29,10 @@ services:
       - 39400:9400
     networks:
       - monitoring
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp=unconfined
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node-exporter
